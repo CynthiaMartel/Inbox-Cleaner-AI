@@ -9,7 +9,7 @@ class StoreEmailRequest extends FormRequest
     public function authorize(): bool
     {
         // Aquí podríamos chequear permisos de usuario en el futuro ****
-        // De momento devolvemos true para permitir todo
+        // De momento devolvemos true para permitir todo *
         return true;
     }
 
