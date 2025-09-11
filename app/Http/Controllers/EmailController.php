@@ -29,9 +29,9 @@ class EmailController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEmailRequest $request) // Validación creada a parte con StoreEmailRequest para que no esté dentro del método y se vea más limpio
+    public function store(StoreEmailRequest $request) // Reglas (rules ()) creadas a parte con StoreEmailRequest para que no esté dentro del método y se vea más limpio
     {
-     return Email::create($request->validated());
+     return Email::create($request->validated()); // create () usa $fillable en Models para la inserción en BD
     }
 
     /**
@@ -45,7 +45,5 @@ class EmailController extends Controller
 
 }
 
-/// use App\Http\Controllers\EmailController;
 
-/// Route::resource('emails', EmailController::class);
 
