@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEmailRequest;
 use App\Models\Email;
+use App\Traits\AIEmailClassifier;
 
 use OpenAI\Laravel\Facades\OpenAI;
 
 
 class EmailController extends Controller
 {
+     /**
+     * CRUD
+     */
+
     /**
      * Display a listing of emails.
      */
@@ -59,11 +64,14 @@ class EmailController extends Controller
         return response()->json(Email::where('ai_label', 'DELETE')->get());
     }
 
+    
+       /**
+     *  OPENAI IMPLEMENTATION. 
+     */
 
     public function classify($id){
         $email = Email::findorFail($id);
 
-        // ****** Call AI later *****
         $label = $this->classifyWithAI($email);
 
         $email->update([
@@ -74,34 +82,36 @@ class EmailController extends Controller
 
         return response()->json($email);
     }
-      // ****** In this moment we only have REVIEW, but in the further steps we will improve this section for AI working*****
-    public function classifyWithAI(Email $email):  string {
-        return 'REVIEW';
-    }
+
+    /**
+     *  Auxiliar method. app/Traits/AIEmailClassifier.php
+     */
+      use AIEmailClassifier;
+
+
 
      /**
-     * Testing AI in Postman
+     * TESTING OPENAI IN Postman
      */
     public function testAI()
-{
-    try {
-        $result = OpenAI::chat()->create([
-            'model' => 'gpt-4o-mini',
-            'messages' => [
-                ['role' => 'system', 'content' => 'Eres un clasificador de correos.'],
-                ['role' => 'user', 'content' => 'Correo de prueba sobre facturas y pagos.'],
-            ],
-        ]);
+    {
+        try {
+            $result = OpenAI::chat()->create([
+                'model' => 'gpt-4o-mini',
+                'messages' => [
+                    ['role' => 'system', 'content' => 'Eres un clasificador de correos.'],
+                    ['role' => 'user', 'content' => 'Correo de prueba sobre facturas y pagos.'],
+                ],
+            ]);
 
-        return response()->json($result);
-    } catch (\OpenAI\Exceptions\RateLimitException $e) {
-        return response()->json([
-            'error' => 'Se alcanzó el límite de peticiones a OpenAI. Intenta de nuevo en unos segundos.',
-            'details' => $e->getMessage(),
-        ], 429);
+            return response()->json($result);
+        } catch (\OpenAI\Exceptions\RateLimitException $e) {
+            return response()->json([
+                'error' => 'Se alcanzó el límite de peticiones a OpenAI. Intenta de nuevo en unos segundos.',
+                'details' => $e->getMessage(),
+            ], 429);
+        }
     }
-}
-
 }
 
 
