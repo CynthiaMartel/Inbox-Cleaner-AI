@@ -1,0 +1,304 @@
+[
+  {
+    "message_id": "msg_001",
+    "from_email": "soporte@banco.com",
+    "subject": "Confirmación de transferencia",
+    "body_text": "Se ha realizado correctamente tu transferencia de 300€.",
+    "received_at": "2025-09-15T09:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_002",
+    "from_email": "newsletter@tiendaonline.com",
+    "subject": "¡Grandes descuentos solo por hoy!",
+    "body_text": "Compra ahora con un 70% de descuento en ropa de verano. Pincha aquí.",
+    "received_at": "2025-09-15T10:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_003",
+    "from_email": "info@formaciones.com",
+    "subject": "Curso de Python online",
+    "body_text": "Hemos lanzado un nuevo curso de Python. ¿Quieres apuntarte?",
+    "received_at": "2025-09-16T08:20:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_004",
+    "from_email": "noreply@amazon.com",
+    "subject": "Factura de tu compra",
+    "body_text": "Adjuntamos la factura correspondiente a tu último pedido.",
+    "received_at": "2025-09-16T12:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_005",
+    "from_email": "promos@supermercado.com",
+    "subject": "Ofertas semanales",
+    "body_text": "Descubre las rebajas de esta semana en tu tienda más cercana.",
+    "received_at": "2025-09-17T15:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_006",
+    "from_email": "duolingo@mail.com",
+    "subject": "Tu racha está en peligro",
+    "body_text": "Hace días que no practicas inglés, vuelve antes de que pierdas tu racha.",
+    "received_at": "2025-09-17T16:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_007",
+    "from_email": "info@ayuntamiento.com",
+    "subject": "Pago de impuestos municipales",
+    "body_text": "El plazo para abonar el impuesto de circulación finaliza el 30 de septiembre.",
+    "received_at": "2025-09-18T11:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_008",
+    "from_email": "contacto@universidad.edu",
+    "subject": "Recordatorio de matrícula",
+    "body_text": "No olvides formalizar tu matrícula antes del 5 de octubre.",
+    "received_at": "2025-09-18T14:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_009",
+    "from_email": "promociones@viajes.com",
+    "subject": "Vuela a Roma por solo 30€",
+    "body_text": "Reserva tu vuelo ahora, plazas limitadas.",
+    "received_at": "2025-09-18T18:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_010",
+    "from_email": "amigo@correo.com",
+    "subject": "¿Quedamos este finde?",
+    "body_text": "Oye, ¿te apetece ir a la playa el sábado?",
+    "received_at": "2025-09-19T09:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+
+    "message_id": "msg_011",
+    "from_email": "alerts@bank.com",
+    "subject": "Notificación de acceso",
+    "body_text": "Se ha iniciado sesión desde un nuevo dispositivo. Si no has sido tú, contacta con soporte.",
+    "received_at": "2025-09-19T10:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_012",
+    "from_email": "promos@electroshop.com",
+    "subject": "Televisores 4K en oferta",
+    "body_text": "Solo este fin de semana, televisores al 50% de descuento.",
+    "received_at": "2025-09-19T11:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_013",
+    "from_email": "soporte@plataforma.com",
+    "subject": "Restablece tu contraseña",
+    "body_text": "Hemos recibido una solicitud de restablecimiento de contraseña.",
+    "received_at": "2025-09-19T12:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_014",
+    "from_email": "eventos@teatro.com",
+    "subject": "Entradas agotadas",
+    "body_text": "Las entradas para el concierto del sábado ya no están disponibles.",
+    "received_at": "2025-09-19T13:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_015",
+    "from_email": "newsletter@periodico.com",
+    "subject": "Noticias del día",
+    "body_text": "Titulares principales: la economía crece un 3% este trimestre.",
+    "received_at": "2025-09-19T14:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_016",
+    "from_email": "promociones@zapatos.com",
+    "subject": "Nuevos modelos de temporada",
+    "body_text": "Explora la nueva colección otoño-invierno.",
+    "received_at": "2025-09-19T15:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_017",
+    "from_email": "amiga@correo.com",
+    "subject": "Feliz cumpleaños",
+    "body_text": "Espero que pases un día maravilloso rodeada de los tuyos.",
+    "received_at": "2025-09-20T09:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_018",
+    "from_email": "suscripciones@plataforma.tv",
+    "subject": "Tu suscripción caduca pronto",
+    "body_text": "Renueva tu plan anual y disfruta de nuestras series sin interrupciones.",
+    "received_at": "2025-09-20T10:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_019",
+    "from_email": "info@biblioteca.com",
+    "subject": "Devolución pendiente",
+    "body_text": "Recuerda devolver el libro prestado antes del 25 de septiembre.",
+    "received_at": "2025-09-20T11:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_020",
+    "from_email": "contacto@ong.org",
+    "subject": "Gracias por tu donación",
+    "body_text": "Tu ayuda permitirá continuar con nuestros proyectos solidarios.",
+    "received_at": "2025-09-20T12:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_021",
+    "from_email": "promos@casino.com",
+    "subject": "Gana dinero fácil",
+    "body_text": "Juega ahora y duplica tu inversión en minutos.",
+    "received_at": "2025-09-20T13:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_022",
+    "from_email": "soporte@correo.com",
+    "subject": "Bandeja casi llena",
+    "body_text": "Tu bandeja de entrada ha alcanzado el 90% de su capacidad.",
+    "received_at": "2025-09-20T14:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_023",
+    "from_email": "ventas@tiendamusica.com",
+    "subject": "Nuevas guitarras en stock",
+    "body_text": "Descubre los últimos modelos Fender y Gibson.",
+    "received_at": "2025-09-20T15:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_024",
+    "from_email": "avisos@transporte.com",
+    "subject": "Corte de servicio",
+    "body_text": "El metro permanecerá cerrado por obras el domingo.",
+    "received_at": "2025-09-20T16:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_025",
+    "from_email": "info@festivalcine.com",
+    "subject": "Programación disponible",
+    "body_text": "Consulta las películas que se proyectarán este año.",
+    "received_at": "2025-09-20T17:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_026",
+    "from_email": "noticias@universidad.edu",
+    "subject": "Convocatoria de becas",
+    "body_text": "Se ha abierto el plazo para solicitar becas de investigación.",
+    "received_at": "2025-09-20T18:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_027",
+    "from_email": "ventas@coches.com",
+    "subject": "Nuevos modelos eléctricos",
+    "body_text": "Ven a conocer los últimos coches eléctricos con autonomía extendida.",
+    "received_at": "2025-09-20T19:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_028",
+    "from_email": "promos@restaurante.com",
+    "subject": "Menú especial fin de semana",
+    "body_text": "Disfruta de un menú degustación a mitad de precio.",
+    "received_at": "2025-09-20T20:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_029",
+    "from_email": "recordatorios@clinica.com",
+    "subject": "Cita médica pendiente",
+    "body_text": "Tienes una cita programada el 25 de septiembre a las 09:00.",
+    "received_at": "2025-09-21T09:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  },
+  {
+    "message_id": "msg_030",
+    "from_email": "alerta@seguridad.com",
+    "subject": "Actividad sospechosa detectada",
+    "body_text": "Se ha detectado un inicio de sesión desde un país inusual.",
+    "received_at": "2025-09-21T10:30:00.000000Z",
+    "ai_label": null,
+    "ai_deleted": false,
+    "embedding": null
+  }
+]
+
