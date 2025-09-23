@@ -60,28 +60,36 @@ class EmailController extends Controller
     /**
      * Display deleteds emails.
      */
-    public function deleted(){
+    public function deleted()
+    {
         return response()->json(Email::where('ai_label', 'DELETE')->get());
     }
 
     
        /**
-     *  OPENAI IMPLEMENTATION. 
+     *  OPENAI IMPLEMENTATION 
      */
 
-    public function classify($id){
-        $email = Email::findorFail($id);
-
-        $label = $this->classifyWithAI($email);
-
-        $email->update([
-            'ai_label' => $label,
-            'ai_deleted' => $label === 'DELETE',
-        ]);
-
-
-        return response()->json($email);
+    public function classify()
+    { // Classify emails labels using OpenAI
+    $emailLabels = $this->classifyWithAI();
+    
+    // Update emails labels in Data Base
+    foreach ($emailLabels as $id => $label) {
+        $email = Email::find($id);
+        if ($email) {
+            $email->update([
+                'ai_label' => $label,
+                'ai_deleted' => $label === 'DELETE',
+            ]);
+        }
     }
+    return response()->json([
+        'message' => 'Correos clasificados',
+        'labels' => $emailLabels
+    ]);             
+    }
+
 
     /**
      *  Auxiliar method. app/Traits/AIEmailClassifier.php

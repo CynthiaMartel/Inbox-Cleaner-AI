@@ -17,7 +17,7 @@ Route::middleware('api')->prefix('api')->group(function () {
     
     Route::get('emails/keep', [EmailController::class, 'keep']);
     Route::get('emails/deleted', [EmailController::class, 'deleted']);
-    Route::post('emails/{id}/classify', [EmailController::class, 'classify']);
+    Route::post('emails/classify', [EmailController::class, 'classify']);
     
     
 

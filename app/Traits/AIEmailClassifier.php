@@ -7,53 +7,58 @@ use App\Models\Email;
 
 trait AIEmailClassifier
 {
-    private function classifyWithAI(Email $email): string
-    {
-        
-        $subject = $email->subject ?? '';
-        $from = $email->from_email ?? '';
-        $snippet = mb_substr($email->body_text ?? '', 0, 500); 
+private function classifyWithAI(): array
+{
+    // Take 10 emails maximum without labels
+    $emails = Email::whereNull('ai_label')->limit(10)->get();
 
-        
-        $system = "Eres un clasificador de correos. RESPONDE SÓLO CON UNA PALABRA: KEEP, DELETE o REVIEW. No añadas explicaciones ni puntuación.";
-        $user = "Reglas: KEEP si el correo es importante, transaccional o personal. DELETE si es spam, publicidad masiva o irrelevante. REVIEW si no estás segura.\nFrom: {$from}\nSubject: {$subject}\nSnippet: {$snippet}";
+    if ($emails->isEmpty()) {
+        return [];
+    }
+
+    $system = "Eres un clasificador de correos. RESPONDE SÓLO CON UNA palabra por cada correo: KEEP, DELETE o REVIEW. Mantén el orden. No añadas explicaciones ni puntuación.";
+
+    $labels = $emails->chunk(10)->flatMap(function ($chunk) use ($system) 
+    {
+        // Prompt
+        $userPrompt = $chunk->map(fn($email, $i) => 
+            "Correo {$i}:\nFrom: {$email->from_email}\nSubject: {$email->subject}\nSnippet: " . mb_substr($email->body_text ?? '', 0, 500)
+        )->implode("\n\n");
 
         try {
             $resp = OpenAI::chat()->create([
-                'model' => 'gpt-4o-mini',      
+                'model' => 'gpt-4o-mini',
                 'messages' => [
                     ['role' => 'system', 'content' => $system],
-                    ['role' => 'user',   'content' => $user],
+                    ['role' => 'user', 'content' => $userPrompt],
                 ],
-                'temperature' => 0.0,   
-                'max_tokens'  => 6,     
+                'temperature' => 0.0,
+                'max_tokens' => 60,
             ]);
-        } catch (\OpenAI\Exceptions\RateLimitException $e) {
-            
-            return 'REVIEW';
+
+            $lines = preg_split('/[\r\n]+/', strtoupper(trim($resp->choices[0]->message->content ?? '')));
+
+            $blockLabels = collect($lines)
+                ->map(fn($line) => preg_replace('/[^A-Z]/', '', $line))
+                ->map(fn($label) => in_array($label, ['KEEP', 'DELETE', 'REVIEW']) ? $label : null)
+                ->filter()
+                ->values();
+
         } catch (\Exception $e) {
-            
-            return 'REVIEW';
+            $blockLabels = $chunk->map(fn() => 'REVIEW');
         }
 
-        
-        $raw = $resp->choices[0]->message->content ?? '';
-        $txt = strtoupper(trim($raw));
-
-        
-        $label = preg_replace('/[^A-Z]/', '', $txt);
-
-       
-        if (in_array($label, ['KEEP','DELETE','REVIEW'])) {
-            return $label;
+        while ($blockLabels->count() < $chunk->count()) {
+            $blockLabels->push('REVIEW');
         }
 
-        
-        if (strpos($txt, 'KEEP') !== false) return 'KEEP';
-        if (strpos($txt, 'DELETE') !== false) return 'DELETE';
+        return $blockLabels;
+    })->toArray();
 
-        // Fallback
-        return 'REVIEW';
-    }
+    // Return emails with labels
+    return $emails->mapWithKeys(function($email, $index) use ($labels) {
+        return [$email->id => $labels[$index] ?? 'REVIEW'];
+    })->toArray();
+}
 
 }
