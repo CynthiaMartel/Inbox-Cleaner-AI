@@ -119,8 +119,7 @@ class EmailController extends Controller
     /**
      *  Update classification manually (by user)(Options in fronted)
      */
-    public function updateLabelManually(Request $request, $id)
-    {
+    public function updateLabelManually(Request $request, $id){
         $request->validate([
             'ai_label' => 'required|in:KEEP,REVIEW,FORCE_DELETE'
         ]);
