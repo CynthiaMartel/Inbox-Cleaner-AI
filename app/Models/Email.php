@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Email extends Model
 {
@@ -18,4 +19,7 @@ class Email extends Model
         'embedding'   => 'array',
         'ai_deleted'  => 'boolean',
     ];
+
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
 }
