@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreEmailRequest;
 use App\Models\Email;
+
+use App\Http\Requests\StoreEmailRequest;
 use App\Traits\AIEmailClassifier;
 
 use OpenAI\Laravel\Facades\OpenAI;
+use Illuminate\Http\Request;
+
 
 
 class EmailController extends Controller
@@ -71,8 +74,11 @@ class EmailController extends Controller
      */
 
     public function classify()
+    
     { // Classify emails labels using OpenAI
     $emailLabels = $this->classifyWithAI();
+
+    $emails=[];
     
     // Update emails labels in Data Base
     foreach ($emailLabels as $id => $label) {
@@ -82,12 +88,11 @@ class EmailController extends Controller
                 'ai_label' => $label,
                 'ai_deleted' => $label === 'DELETE',
             ]);
+        
+        $emails[]=$email->toArray();
         }
     }
-    return response()->json([
-        'message' => 'Correos clasificados',
-        'labels' => $emailLabels
-    ]);             
+    return response()->json($emails);             
     }
 
 
@@ -96,7 +101,47 @@ class EmailController extends Controller
      */
       use AIEmailClassifier;
 
+    /**
+     *  Show emails with REVIEW classification results
+     */
+    public function showReview(){
+        $email = Email::where('ai_label','REVIEW')->get;
+        return response()->json($email);
+    }
+    /**
+     *  Show emails with KEEP classification results
+     */
+    public function showKeep(){
+        $email = Email::where('ai_label','KEEP')->get;
+        return response()->json($email);
+    }
+    
+    /**
+     *  Update classification manually (by user)(Options in fronted)
+     */
+    public function updateLabelManually(Request $request, $id)
+    {
+        $request->validate([
+            'ai_label' => 'required|in:KEEP,REVIEW,FORCE_DELETE'
+        ]);
 
+        $email = Email::withTrashed()->findOrFail($id);
+
+        $newLabel = $request->ai_label;
+
+        if ($newLabel === 'FORCE_DELETE') {
+            $email->forceDelete();
+            return response()->json(['message' => 'Correo eliminado definitivamente']);
+        }
+
+        $email->update([
+            'ai_label' => $newLabel,
+            'ai_deleted' => false,
+            'deleted_at' => null,
+        ]);
+
+        return response()->json($email);
+    }
 
      /**
      * TESTING OPENAI IN Postman
