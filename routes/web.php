@@ -7,23 +7,38 @@ Route::get('/', function () {
 });
 
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\SecurityTrashController;
 use OpenAI\Laravel\Facades\OpenAI;
 
 Route::middleware('api')->prefix('api')->group(function () {
-    // TestAI in Postman
+    // OpenAI test
     Route::get('emails/test-ai', [EmailController::class, 'testAI']);
-
-    Route::apiResource('emails', EmailController::class);
     
-    Route::get('emails/keep', [EmailController::class, 'keep']);
-    Route::get('emails/deleted', [EmailController::class, 'deleted']);
+    // Classify Emails using OpenAI
     Route::post('emails/classify', [EmailController::class, 'classify']);
     
+    // Classify Emails manually by user
+    Route::put('emails/{id}/updateLabelManually', [EmailController::class, 'updateLabelManually']);
     
-
+    
+    // Retrieve emails by OpenAI classification (REVIEW, KEEP, DELETE) (delete_at -> showDelete_at)
+    Route::get('emails/showReview', [EmailController::class, 'showReview']);
+    Route::get('emails/showKeep', [EmailController::class, 'showKeep']);
+    Route::get('emails/showDelete', [EmailController::class, 'showDelete']);
+    Route::get('emails/showDelete_at', [SecurityTrashController::class, 'showDelete_at']);
+    
+    // Restore an email from Security Trash (mark it again as REVIEW)
+    Route::post('emails/restore', [SecurityTrashController::class, 'restore']);
+    
+    // Permanently delete emails from Security Trash
+    Route::delete('emails/destroyDefinitely', [SecurityTrashController::class, 'destroyDefinitely']);
+    
+    //  Standard RESTful CRUD routes (index, show, store, update, destroy)
+    Route::apiResource('emails', EmailController::class);
+       
 });
 
-//  Making toke visible for testing in Postman 
+//  Make token visible for testing in Postman 
 Route::get('/csrf-token', function () {
     return ['csrf_token' => csrf_token()];
 });
