@@ -52,27 +52,10 @@ class EmailController extends Controller
         $email->delete();
         return response()->noContent(); // 204 without content
     }
-
-     /**
-     * Display emails in safe zone.
-     */
-    public function keep(){
-        return response()->json(Email::where('ai_label', 'KEEP')->get());
-    }
-
-    /**
-     * Display deleteds emails.
-     */
-    public function deleted()
-    {
-        return response()->json(Email::where('ai_label', 'DELETE')->get());
-    }
-
     
        /**
      *  OPENAI IMPLEMENTATION 
      */
-
     public function classify()
     
     { // Classify emails labels using OpenAI
@@ -88,13 +71,17 @@ class EmailController extends Controller
                 'ai_label' => $label,
                 'ai_deleted' => $label === 'DELETE',
             ]);
+            if ($label === 'DELETE' && !$email->trashed()) {
+                // Mark timestamp in deleted_at (soft delete)
+                $email->delete(); 
+            }
         
-        $emails[]=$email->toArray();
+        $email->refresh();
+        $emails[] = $email->toArray();
         }
     }
     return response()->json($emails);             
     }
-
 
     /**
      *  Auxiliar method. app/Traits/AIEmailClassifier.php
@@ -105,14 +92,18 @@ class EmailController extends Controller
      *  Show emails with REVIEW classification results
      */
     public function showReview(){
-        $email = Email::where('ai_label','REVIEW')->get;
+        $email = Email::where('ai_label','REVIEW')->get();
         return response()->json($email);
     }
     /**
      *  Show emails with KEEP classification results
      */
     public function showKeep(){
-        $email = Email::where('ai_label','KEEP')->get;
+        $email = Email::where('ai_label','KEEP')->get();
+        return response()->json($email);
+    }
+    public function showDelete(){
+        $email = Email::withTrashed()->where('ai_label','DELETE')->get();
         return response()->json($email);
     }
     
