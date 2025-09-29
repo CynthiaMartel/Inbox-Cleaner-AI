@@ -56,32 +56,35 @@ class EmailController extends Controller
        /**
      *  OPENAI IMPLEMENTATION 
      */
-    public function classify()
-    
-    { // Classify emails labels using OpenAI
-    $emailLabels = $this->classifyWithAI();
 
-    $emails=[];
+   public function classify(){
     
-    // Update emails labels in Data Base
-    foreach ($emailLabels as $id => $label) {
-        $email = Email::find($id);
-        if ($email) {
-            $email->update([
-                'ai_label' => $label,
-                'ai_deleted' => $label === 'DELETE',
-            ]);
-            if ($label === 'DELETE' && !$email->trashed()) {
-                // Mark timestamp in deleted_at (soft delete)
-                $email->delete(); 
-            }
-        
-        $email->refresh();
-        $emails[] = $email->toArray();
+        $emails = Email::whereNull('ai_label')->limit(10)->get();
+
+        if ($emails->isEmpty()) {
+            return response()->json([]);
         }
+
+        $labels = $this->smartClassifier($emails); 
+        $processed = [];
+
+        foreach ($labels as $id => $label) {
+            $email = Email::find($id);
+            if ($email) {
+                $email->update([
+                    'ai_label' => $label,
+                    'ai_deleted' => $label === 'DELETE',
+                ]);
+                if ($label === 'DELETE' && !$email->trashed()) {
+                    $email->delete();
+                }
+                $processed[] = $email->fresh()->toArray();
+            }
+        }
+
+        return response()->json($processed);
     }
-    return response()->json($emails);             
-    }
+
 
     /**
      *  Auxiliar method. app/Traits/AIEmailClassifier.php
