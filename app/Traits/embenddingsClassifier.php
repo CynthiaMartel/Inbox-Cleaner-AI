@@ -1,5 +1,7 @@
 <?php
 /**
+ * Suggested implementation for the future (this is not used in this project):
+ * 
  * smartClassifier(Email $email): string
  *
  * “Smart” classification flow for a single email:

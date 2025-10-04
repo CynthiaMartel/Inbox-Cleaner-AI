@@ -7,6 +7,7 @@ use App\Models\Email;
 use App\Http\Requests\StoreEmailRequest;
 use App\Traits\AIEmailClassifier;
 
+
 use OpenAI\Laravel\Facades\OpenAI;
 use Illuminate\Http\Request;
 
@@ -57,33 +58,37 @@ class EmailController extends Controller
      *  OPENAI IMPLEMENTATION 
      */
 
-   public function classify(){
-    
-        $emails = Email::whereNull('ai_label')->limit(10)->get();
+    public function classify()
+{
+    // Classify with openAI (Auxiliar method: app/Traits/AIEmailClassification)
+    $emailLabels = $this->classifyWithAI();
 
-        if ($emails->isEmpty()) {
-            return response()->json([]);
-        }
+    $emails = [];
 
-        $labels = $this->smartClassifier($emails); 
-        $processed = [];
+    // 2. Update ai_label in DB
+    foreach ($emailLabels as $id => $label) {
+        $email = Email::find($id);
 
-        foreach ($labels as $id => $label) {
-            $email = Email::find($id);
-            if ($email) {
-                $email->update([
-                    'ai_label' => $label,
-                    'ai_deleted' => $label === 'DELETE',
-                ]);
-                if ($label === 'DELETE' && !$email->trashed()) {
-                    $email->delete();
-                }
-                $processed[] = $email->fresh()->toArray();
+        if ($email) {
+            $email->update([
+                'ai_label' => $label,
+                'ai_deleted' => $label === 'DELETE',
+            ]);
+
+            // If ai_label is marked as 'DELETED' -> soft delete (SecurityTrash)
+            if ($label === 'DELETE' && !$email->trashed()) {
+                $email->delete();
             }
-        }
 
-        return response()->json($processed);
+            $email->refresh();
+            $emails[] = $email->toArray();
+        }
     }
+
+    // 
+    return response()->json($emails);
+}
+
 
 
     /**
