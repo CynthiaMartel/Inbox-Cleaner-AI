@@ -1,7 +1,5 @@
 # Laravel Email Cleaner – Proyecto de Aprendizaje 📨
 
-![Proyecto en construcción](imagenes/image.png)
-
 > **Aviso / Notice:**  
 > Este proyecto está en construcción y es parte de mi aprendizaje usando **Laravel** y herramientas de IA para la gestión de correos electrónicos.  
 > Por el momento solo cuenta con el backend, pero se han comprobado las funcionalidades usando **Postman** y una base de datos ficticia en **HeidiSQL / MySQL**.  
